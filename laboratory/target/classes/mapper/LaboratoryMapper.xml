@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xc.dao.LaboratoryMapper">
+  <resultMap id="BaseResultMap" type="com.xc.bean.Laboratory">
+    <id column="lab_id" jdbcType="INTEGER" property="labId" />
+    <result column="labname" jdbcType="VARCHAR" property="labname" />
+    <result column="personnum" jdbcType="INTEGER" property="personnum" />
+    <result column="introduce" jdbcType="VARCHAR" property="introduce" />
+    <result column="u_id" jdbcType="INTEGER" property="uId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    lab_id, labname, personnum, introduce, u_id
+  </sql>
+  <select id="selectByExample" parameterType="com.xc.bean.LaboratoryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from lab_room
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lab_room
+    where lab_id = #{labId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from lab_room
+    where lab_id = #{labId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xc.bean.LaboratoryExample">
+    delete from lab_room
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xc.bean.Laboratory">
+    insert into lab_room (lab_id, labname, personnum, 
+      introduce, u_id)
+    values (#{labId,jdbcType=INTEGER}, #{labname,jdbcType=VARCHAR}, #{personnum,jdbcType=INTEGER}, 
+      #{introduce,jdbcType=VARCHAR}, #{uId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xc.bean.Laboratory">
+    insert into lab_room
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="labId != null">
+        lab_id,
+      </if>
+      <if test="labname != null">
+        labname,
+      </if>
+      <if test="personnum != null">
+        personnum,
+      </if>
+      <if test="introduce != null">
+        introduce,
+      </if>
+      <if test="uId != null">
+        u_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="labId != null">
+        #{labId,jdbcType=INTEGER},
+      </if>
+      <if test="labname != null">
+        #{labname,jdbcType=VARCHAR},
+      </if>
+      <if test="personnum != null">
+        #{personnum,jdbcType=INTEGER},
+      </if>
+      <if test="introduce != null">
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="uId != null">
+        #{uId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xc.bean.LaboratoryExample" resultType="java.lang.Long">
+    select count(*) from lab_room
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update lab_room
+    <set>
+      <if test="record.labId != null">
+        lab_id = #{record.labId,jdbcType=INTEGER},
+      </if>
+      <if test="record.labname != null">
+        labname = #{record.labname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personnum != null">
+        personnum = #{record.personnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.introduce != null">
+        introduce = #{record.introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uId != null">
+        u_id = #{record.uId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update lab_room
+    set lab_id = #{record.labId,jdbcType=INTEGER},
+      labname = #{record.labname,jdbcType=VARCHAR},
+      personnum = #{record.personnum,jdbcType=INTEGER},
+      introduce = #{record.introduce,jdbcType=VARCHAR},
+      u_id = #{record.uId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xc.bean.Laboratory">
+    update lab_room
+    <set>
+      <if test="labname != null">
+        labname = #{labname,jdbcType=VARCHAR},
+      </if>
+      <if test="personnum != null">
+        personnum = #{personnum,jdbcType=INTEGER},
+      </if>
+      <if test="introduce != null">
+        introduce = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="uId != null">
+        u_id = #{uId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where lab_id = #{labId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xc.bean.Laboratory">
+    update lab_room
+    set labname = #{labname,jdbcType=VARCHAR},
+      personnum = #{personnum,jdbcType=INTEGER},
+      introduce = #{introduce,jdbcType=VARCHAR},
+      u_id = #{uId,jdbcType=INTEGER}
+    where lab_id = #{labId,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>

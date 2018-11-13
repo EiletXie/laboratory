@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xc.dao.ApplyMapper">
+  <resultMap id="BaseResultMap" type="com.xc.bean.Apply">
+    <id column="apply_id" jdbcType="INTEGER" property="applyId" />
+    <result column="labname" jdbcType="VARCHAR" property="labname" />
+    <result column="one" jdbcType="CHAR" property="one" />
+    <result column="three" jdbcType="CHAR" property="three" />
+    <result column="five" jdbcType="CHAR" property="five" />
+    <result column="seven" jdbcType="CHAR" property="seven" />
+    <result column="nine" jdbcType="CHAR" property="nine" />
+    <result column="applydate" jdbcType="DATE" property="applydate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    apply_id, labname, one, three, five, seven, nine, applydate
+  </sql>
+  <select id="selectByExample" parameterType="com.xc.bean.ApplyExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from lab_apply
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lab_apply
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from lab_apply
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xc.bean.ApplyExample">
+    delete from lab_apply
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xc.bean.Apply">
+    insert into lab_apply (apply_id, labname, one, 
+      three, five, seven, nine, 
+      applydate)
+    values (#{applyId,jdbcType=INTEGER}, #{labname,jdbcType=VARCHAR}, #{one,jdbcType=CHAR}, 
+      #{three,jdbcType=CHAR}, #{five,jdbcType=CHAR}, #{seven,jdbcType=CHAR}, #{nine,jdbcType=CHAR}, 
+      #{applydate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xc.bean.Apply">
+    insert into lab_apply
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="applyId != null">
+        apply_id,
+      </if>
+      <if test="labname != null">
+        labname,
+      </if>
+      <if test="one != null">
+        one,
+      </if>
+      <if test="three != null">
+        three,
+      </if>
+      <if test="five != null">
+        five,
+      </if>
+      <if test="seven != null">
+        seven,
+      </if>
+      <if test="nine != null">
+        nine,
+      </if>
+      <if test="applydate != null">
+        applydate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="applyId != null">
+        #{applyId,jdbcType=INTEGER},
+      </if>
+      <if test="labname != null">
+        #{labname,jdbcType=VARCHAR},
+      </if>
+      <if test="one != null">
+        #{one,jdbcType=CHAR},
+      </if>
+      <if test="three != null">
+        #{three,jdbcType=CHAR},
+      </if>
+      <if test="five != null">
+        #{five,jdbcType=CHAR},
+      </if>
+      <if test="seven != null">
+        #{seven,jdbcType=CHAR},
+      </if>
+      <if test="nine != null">
+        #{nine,jdbcType=CHAR},
+      </if>
+      <if test="applydate != null">
+        #{applydate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xc.bean.ApplyExample" resultType="java.lang.Long">
+    select count(*) from lab_apply
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update lab_apply
+    <set>
+      <if test="record.applyId != null">
+        apply_id = #{record.applyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.labname != null">
+        labname = #{record.labname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.one != null">
+        one = #{record.one,jdbcType=CHAR},
+      </if>
+      <if test="record.three != null">
+        three = #{record.three,jdbcType=CHAR},
+      </if>
+      <if test="record.five != null">
+        five = #{record.five,jdbcType=CHAR},
+      </if>
+      <if test="record.seven != null">
+        seven = #{record.seven,jdbcType=CHAR},
+      </if>
+      <if test="record.nine != null">
+        nine = #{record.nine,jdbcType=CHAR},
+      </if>
+      <if test="record.applydate != null">
+        applydate = #{record.applydate,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update lab_apply
+    set apply_id = #{record.applyId,jdbcType=INTEGER},
+      labname = #{record.labname,jdbcType=VARCHAR},
+      one = #{record.one,jdbcType=CHAR},
+      three = #{record.three,jdbcType=CHAR},
+      five = #{record.five,jdbcType=CHAR},
+      seven = #{record.seven,jdbcType=CHAR},
+      nine = #{record.nine,jdbcType=CHAR},
+      applydate = #{record.applydate,jdbcType=DATE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xc.bean.Apply">
+    update lab_apply
+    <set>
+      <if test="labname != null">
+        labname = #{labname,jdbcType=VARCHAR},
+      </if>
+      <if test="one != null">
+        one = #{one,jdbcType=CHAR},
+      </if>
+      <if test="three != null">
+        three = #{three,jdbcType=CHAR},
+      </if>
+      <if test="five != null">
+        five = #{five,jdbcType=CHAR},
+      </if>
+      <if test="seven != null">
+        seven = #{seven,jdbcType=CHAR},
+      </if>
+      <if test="nine != null">
+        nine = #{nine,jdbcType=CHAR},
+      </if>
+      <if test="applydate != null">
+        applydate = #{applydate,jdbcType=DATE},
+      </if>
+    </set>
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xc.bean.Apply">
+    update lab_apply
+    set labname = #{labname,jdbcType=VARCHAR},
+      one = #{one,jdbcType=CHAR},
+      three = #{three,jdbcType=CHAR},
+      five = #{five,jdbcType=CHAR},
+      seven = #{seven,jdbcType=CHAR},
+      nine = #{nine,jdbcType=CHAR},
+      applydate = #{applydate,jdbcType=DATE}
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </update>
+</mapper>
